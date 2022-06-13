@@ -1,0 +1,447 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+/* @import url('http://fonts.cdnfonts.com/css/futura-md-bt'); */
+@import url('https://db.onlinewebfonts.com/c/cc84650569fd07dac022c55b20c66e46?family=Futura+Bk+BT');
+
+.turnover-cost-calculator {
+    padding: 40px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+    margin: 40px auto;
+    position: relative;
+}
+.turnover-cost-calculator * {
+    font-family: 'Futura Bk BT', sans-serif;
+    font-style: normal;
+}
+.turnover-cost-heading{
+    color: #008089;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    margin: 20px 0 30px 0;
+}
+.turnover-cost-logo{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.turnover-cost-logo img{
+    height: 20px;
+}
+.turnover-cost-calculator .calc-input-label {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    line-height: 2.3;
+}
+.turnover-cost-calculator .calc-input input {
+    height: 45px;
+    border: 2px solid #d4d4d8;
+    box-shadow: none;
+    padding: 5px;
+    text-align: center;
+    font-size: 20px;
+    width: 100px;
+    color: #000;
+}
+.turnover-cost-calculator .calc-input input:focus {
+    border: 2px solid #147B85;
+    outline: 0;
+    color: #000;
+}
+.turnover-cost-calculator .calc-input {
+    font-size: 20px;
+    color: #000;
+    width: 210px;
+}
+.turnover-cost-calculator .calc-output {
+    width: auto;
+    line-height: 2.3;
+}
+.turnover-cost-calculator .calc-output-row {
+    font-size: 20px;
+    font-weight: bold;
+    color: #343537;
+}
+.calc-input-row,
+.calc-output-row {
+    display: flex;
+    flex-direction: row;
+    font-size: 19px;
+    font-weight: 300;
+    padding: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+}
+.calc-input-unit{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    font-size: 20px;
+}
+.turnover-cost-calculator__result-section .calc-output-row {
+    padding: 0;
+}
+.calc-section-header {
+    font-weight: 600;
+    padding: 25px 0 10px 0;
+    text-align: left;
+    font-size: 16px;
+    border-top: 1px solid #dedede;
+    color: #00b0a6;
+    text-transform: uppercase;
+}
+.calc-subtotal {
+    white-space: nowrap;
+}
+.turnover-cost-calculator__total-cost {
+    font-size: 30px;
+    font-weight: 700;
+    color: #00b0a6;
+    white-space: nowrap;
+}
+/* ///////////// */
+
+
+@media screen and (max-width: 760px) {
+    .calc-input-row {
+        width: 100% !important;
+        display: inline-block !important;
+    }
+    .calc-input-label {
+        width: 100% !important;
+    }
+    .calc-input {
+        display: inline !important;
+    }
+    .calc-subtotal {
+        white-space: normal !important;
+    }
+}
+
+
+</style>
+<div class="turnover-cost-calculator">
+    <div class="turnover-cost-logo">
+        <img src="data:image/png;base64,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" alt="">
+    </div>
+    <h2 class="turnover-cost-heading">Cost of Turnover Calculator</h2>
+    <div class="form-wrap">
+        <div class="col-form">
+            <div class="calc-input-row">
+                <div class="calc-input-label">
+                    Average salary
+                </div>
+                <span class="calc-input-unit">$</span>
+                <div class="calc-input"><input type="tel" class="averageSalary" value="78" /><span class="calc-input-unit">000</span></div>
+            </div>
+            <div class="calc-input-row">
+                <div class="calc-input-label">
+                    Employees lost in the last year
+                </div>
+                <div class="calc-input"><input type="tel" class="employeesLost" value="20" /><span class="calc-input-unit">Employees</span></div>
+            </div>
+            <div class="calc-input-row">
+                <div class="calc-input-label">
+                    Weeks to fill position
+                </div> 
+                <div class="calc-input"><input type="tel" class="weeksFillPosition" value="10" /><span class="calc-input-unit">Weeks</span></div>
+            </div>
+            <div class="js-toggle-option">
+                <div class="calc-section-header">
+                    Loss of knowledge
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Average tenure
+                    </div>
+                    <div class="calc-input"><input type="tel" class="averageTenure" value="3" /><span class="calc-input-unit">Years</span></div>
+                </div>
+                <div class="calc-output-row calc-subtotal">
+                    <div class="calc-input-label">
+                        Loss of knowledge
+                    </div>
+                    <div class="calc-output calc-subtotal" title="Assuming 5% of employee's' time is spent perfecting this role">$<span type="tel" class="costKnowledgeTotal" value="13500" disabled></span></div>
+                </div>
+                <div class="calc-section-header">
+                    Loss productivity from other employees filling in for the vacant position
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Productivity cost
+                    </div>
+                    <div class="calc-input"><input type="tel" class="costCoverPercent" value="30" /><span class="calc-input-unit">%</span></div>
+                </div>
+                <div class="calc-output-row calc-subtotal">
+                    <div class="calc-input-label">
+                        Total cost to "cover" position
+                    </div>
+                    <div class="calc-output calc-subtotal">$<span type="tel" class="costCoverTotal" value="4680" disabled></span></div>
+                </div>
+                <div class="calc-section-header">
+                    Cost to hire replacement
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        HR salary
+                    </div>
+                    <div class="calc-input"><input type="tel" class="hrSalary" value="68" /><span class="calc-input-unit">000</span></div>
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Work hours to fill position
+                    </div>
+                    <div class="calc-input"><input type="tel" class="hrWorkHours" value="30" /><span class="calc-input-unit">Hours</span></div>
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Hiring manager salary
+                    </div>
+                    <div class="calc-input"><input type="tel" class="hiringRateThousand" value="68" /><span class="calc-input-unit">000</span></div>
+                </div>
+                
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Work hours to fill position
+                    </div>
+                    <div class="calc-input"><input type="tel" class="hiringTimeToFill" value="30" /><span class="calc-input-unit">Hours</span></div>
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Advertising cost
+                    </div>
+                    <span class="calc-input-unit">$</span>
+                    <div class="calc-input">
+                        <input type="tel" class="advertisingCost" value="1000" />
+                    </div>
+                </div>
+                <div class="calc-output-row calc-subtotal">
+                    <div class="calc-input-label">
+                        Cost to hire replacement
+                    </div>
+                    <div class="calc-output calc-subtotal">$<span type="tel" class="costFillTotal" value="2020" disabled></span></div>
+                </div>
+                <div class="calc-section-header">
+                    New hire training cost
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Mentor or manager salary
+                    </div>
+                    <span class="calc-input-unit">$</span>
+                    <div class="calc-input"><input type="tel" class="mentorRateThousand" value="102" /><span class="calc-input-unit">000</span></div>
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Total training hours
+                    </div>
+                    <div class="calc-input"><input type="tel" class="mentorTimeTraining" value="45" /><span class="calc-input-unit">Hours</span></div>
+                </div>
+                <div class="calc-output-row calc-subtotal">
+                    <div class="calc-input-label">
+                        New hire training cost
+                    </div>
+                    <div class="calc-output calc-subtotal">$<span type="tel" class="costTrainingTotal" value="5760" disabled></span></div>
+                </div>
+                <div class="calc-section-header">
+                    Return to previous productivity
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        New hire reduction in productivity
+                    </div>
+                    <div class="calc-input"><input type="tel" class="productivityPenaltyPercent" value="25" /><span class="calc-input-unit">%</span></div>
+                </div>
+                <div class="calc-input-row">
+                    <div class="calc-input-label">
+                        Weeks to 100% productivity
+                    </div>
+                    <div class="calc-input"><input type="tel" class="productivityRampUpWeeks" value="25" /><span class="calc-input-unit">Weeks</span></div>
+                </div>
+                <div class="calc-output-row calc-subtotal">
+                    <div class="calc-input-label">
+                        Productivity ramp up cost
+                    </div>
+                    <div class="calc-output calc-subtotal">$<span type="tel" class="costProductivityRampUp" value="12000" disabled></span></div>
+                </div>
+            </div>
+            <div class="calc-section-header"></div>
+            <div class="turnover-cost-calculator__result-section">
+                <div class="calc-output-row calc-subtotal">
+                    <div class="calc-input-label">
+                        Cost per employee
+                    </div>
+                    <div class="calc-output calc-subtotal">$<span type="tel" class="costTotalPerEmployee" value="35000" disabled></span></div>
+                </div>
+                <div class="calc-output-row calc-subtotal">
+                    <div class="calc-input-label">
+                        Total cost
+                    </div>
+                    <div class="calc-output calc-subtotal turnover-cost-calculator__total-cost">$<span type="tel" class="costTotalPerCompany" value="700000" disabled></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    
+
+    function tryGetValue(className) {
+        var $el = document.querySelector('input.' + className);
+        if ($el == null) return 0;
+        
+        // console.log(typeof $el,$el,className)
+        // var str = $el.value;
+        if($el.tagName == 'INPUT'){
+            if ($el.value == null || $el.value.length == 0 ) {
+                $el.classList.add("error");
+                return 0;
+            }
+    
+            var val = parseFloat($el.value);
+            if (isNaN(val)) {
+                $el.classList.add("error");
+                return 0;
+            }
+    
+            $el.classList.remove("error");
+            return val;
+        }else{
+            return 0;
+        }
+        
+
+    }
+
+    function trySetValue(className, value) {
+        var $el = document.querySelector('.' + className);
+        if ($el == null) return 0;
+        if ($el.tagName == 'INPUT') {
+            var type = $el.type;
+            if (type === "number" || type === "tel") {
+                $el.value = (value);
+            } else {
+                $el.value = (formatNumber(value));
+            }
+        } else {
+            $el.innerHTML = (formatNumber(value));
+        }
+    }
+
+
+    function formatNumber(x) {
+        var parts = x.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+    }
+
+    function calculate() {
+
+        var $root = document.querySelector(".turnover-cost-calculator");
+        var param;
+        var vars = {
+            // hourlyRate: 0,
+            averageSalary: 0,//
+            employeesLost: 0,//
+            averageTenure: 0,//
+            costKnowledgeTotal: 0,
+            costCoverPercent: 0,
+            weeksFillPosition: 0,//
+            costCoverTotal: 0,
+            hrSalary: 0,
+            hrWorkHours: 0,
+            hiringRateThousand: 0,
+            hiringTimeToFill: 0,
+            advertisingCost: 0,
+            costFillTotal: 0,
+            mentorRateThousand: 0,
+            mentorTimeTraining: 0,
+            costTrainingTotal: 0,
+            productivityPenaltyPercent: 0,
+            productivityRampUpWeeks: 0,
+            costProductivityRampUp: 0,
+            costExpenses: 0,
+            costProductivity: 0,
+            costTotalPerEmployee: 0,
+            costTotalPerCompany: 0,
+        };
+
+        for (param in vars) {
+            if (!vars.hasOwnProperty(param)) continue;
+            vars[param] = tryGetValue(param);
+        }
+
+        var hourPerYear = 2000;
+        var hourPerWeek = 40;
+        var knowledgeValuePercent = 0.05;
+        var yearlyRate = vars.averageSalary * 1000;
+        var mentorRate = vars.mentorRateThousand * 1000;
+        var hiringRate = vars.hiringRateThousand * 1000;
+        var hrSalaryRate = vars.hrSalary * 1000;
+        var totalHiringRate = hiringRate + hrSalaryRate;
+
+        vars.costKnowledgeTotal =
+            yearlyRate *
+            knowledgeValuePercent *
+            vars.averageTenure;
+
+        vars.costCoverTotal =
+            yearlyRate / hourPerYear *
+            vars.costCoverPercent / 100.0 *
+            vars.weeksFillPosition *
+            hourPerWeek;
+
+        vars.costFillTotal =
+        totalHiringRate / hourPerYear *
+            vars.hrWorkHours +
+            vars.hiringTimeToFill +
+            vars.advertisingCost;
+
+        vars.costTrainingTotal =
+            mentorRate / hourPerYear *
+            vars.mentorTimeTraining;
+
+        vars.costProductivityRampUp =
+            yearlyRate / hourPerYear *
+            vars.productivityPenaltyPercent / 100.0 *
+            vars.productivityRampUpWeeks *
+            hourPerWeek;
+
+        vars.costExpenses =
+            vars.costFillTotal +
+            vars.costTrainingTotal;
+
+        vars.costProductivity =
+            vars.costKnowledgeTotal +
+            vars.costCoverTotal +
+            vars.costProductivityRampUp;
+
+
+        vars.costTotalPerEmployee =
+            vars.costExpenses +
+            vars.costProductivity;
+
+        vars.costTotalPerCompany =
+            vars.costTotalPerEmployee *
+            vars.employeesLost;
+
+        for (param in vars) {
+            if (!vars.hasOwnProperty(param)) continue;
+            trySetValue(param, vars[param]);
+        }
+
+
+    }
+
+    calculate();
+
+    document.querySelectorAll(".turnover-cost-calculator input").forEach(element => {
+        element.addEventListener('input', calculate);
+    });
+
+
+
+</script>
